@@ -1,7 +1,7 @@
 def hello(name):
-    print('My firsth '+ name)
+    print(10 + name)
 
-hello('code')
+hello(1)
 
     
     
