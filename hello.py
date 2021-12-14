@@ -1,1 +1,2 @@
-print('Hello word')
+def hello(name):
+    print('My firsth'+ name)
