@@ -4,7 +4,7 @@
 #  Classe per file CSV
 #==============================
 
-class CSVFile:
+class CSVFile():
     #creo la classe
     def __init__(self, name):
         #setto il nome del file

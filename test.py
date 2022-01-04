@@ -86,10 +86,12 @@ class NumericalCSVFile(CSVFile):
 # ==============================
 #       Corpo del programma
 # ==============================
-my_file = CSVFile(name = 'shampoo_sales.csv')
-print('Nome del file: {}'.format(my_file.name))
-print('Dati contenuti nel file: "{}"'.format(my_file.get_data(0, 39)))
+mio_file = CSVFile('shampoo_sales.csv')
+print('Nome del file: {}'.format(mio_file.name))
+print('Dati contenuti nel file: "{}"'.format(mio_file.get_data(0, 39)))
 
-my_numerical_file = NumericalCSVFile(name = 'shampoo_sales.csv')
-print('Nome del file numerico: "{}"'.format(my_numerical_file.name))
-print('Dati contenuti nel file numerico: "{}"'.format(my_numerical_file.get_data(0, 74)))
+mio_file_numerico = NumericalCSVFile(name = 'shampoo_sales.csv')
+print('Nome del file numerico: "{}"'.format(mio_file_numerico.name))
+print('Dati contenuti nel file numerico: "{}"'.format(mio_file_numerico.get_data(0, 74)))
+
+
