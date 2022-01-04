@@ -1,128 +1,95 @@
-#==============================
-#  Classe per file CSV
-#==============================
+# Parte 1 - Modificare l’oggetto CSVFile della lezione precedente in modo che alzi un'eccezione se il nome del file non è una stringa.
+# Parte 2 - Modificare la funzione get_data di CSVFile in modo da leggere solo un intervallo di righe del file, aggiungendo gli argomenti start ed end opzionali, controllandone la correttezza e sanitizzandoli se serve. Infine, eseguire commit del file. 
 
-class CSVFile:
-
+# ==============================
+#           CLASSI
+# ==============================
+#       Classe per CSVFile
+# ==============================
+class CSVFile():
+    
     def __init__(self, name):
-        
-        # Setto il nome del file
+        # Istanziamento dell'attributo "name"
         self.name = name
-        
-        
-        # Provo ad aprirlo e leggere una riga
-        self.can_read = True
+        # Controllo del tipo di nome del file
+        if type(name) != str:
+            raise TypeError('Errore di tipo: il nome inserito non è una stringa! Ecco il parametro che lo ha generato: {}'.format(name))
+    
+    def get_data(self, start = None, end = None):
+        # Istanziamento di due liste: una lista e una lista di lista
+        list = []
+        listoflist = []
+        # Apertura del file
         try:
-            my_file = open(self.name, 'r')
-            my_file.readline()
-        except Exception as e:
-            self.can_read = False
-            print('Errore in apertura del file: "{}"'.format(e))
-
-
-    def get_data(self):
-        
-        if not self.can_read:
-            
-            # Se nell'init ho settato can_read a False vuol dire che
-            # il file non poteva essere aperto o era illeggibile
-            print('Errore, file non aperto o illeggibile')
-            
-            # Esco dalla funzione tornando "niente".
+            file = open(self.name, 'r')
+        except FileNotFoundError:
+            print ('Il file che si sta cercando di aprire non esiste!')
             return None
-
-        else:
-            # Inizializzo una lista vuota per salvare tutti i dati
-            data = []
-    
-            # Apro il file
-            my_file = open(self.name, 'r')
-
-            # Leggo il file linea per linea
-            for line in my_file:
-                
-                # Faccio lo split di ogni linea sulla virgola
-                elements = line.split(',')
-                
-                # Posso anche pulire il carattere di newline 
-                # dall'ultimo elemento con la funzione strip():
-                elements[-1] = elements[-1].strip()
-                
-                # p.s. in realta' strip() toglie anche gli spazi
-                # bianchi all'inizio e alla fine di una stringa.
-    
-                # Se NON sto processando l'intestazione...
-                if elements[0] != 'Date':
-                        
-                    # Aggiungo alla lista gli elementi di questa linea
-                    data.append(elements)
-            
-            # Chiudo il file
-            my_file.close()
-            
-            # Quando ho processato tutte le righe, ritorno i dati
-            return data
-
-
-
-#==============================
-# Classe per file NumericalCSV
-#==============================
-
+        # Controllo della correttezza di start ed end
+        if type(start) != int:
+            raise TypeError('Errore di tipo: il parametro start={} inserito non è un numero intero!'.format(start))
+        if type(end) != int:
+            raise TypeError('Errore di tipo: il parametro end={} inserito non è un numero intero!'.format(end))
+        if(start > 39):
+            raise ValueError('Il parametro start={} è maggiore della lunghezza del file! Il file {} ha {} righe'.format(start, self.name, 39))
+        if(end > 74):
+            raise ValueError('Il parametro end={} è maggiore della lunghezza del file! Il file {} ha {} righe'.format(end, self.name, 39))
+        if(start < 0):
+            raise ValueError('Errore di valore (start={}): non è accettabile un valore negativo!'.format(start))
+        if(end < 0):
+            raise ValueError('Errore di valore (end={}): non è accettabile un valore negativo!'.format(end))
+        if(start > end):
+            raise ValueError('Il parametro start={} è maggiore del parametro end={}'.format(start, end))
+        # Lettura del file, linea per linea
+        for line in file:
+            # Istanziamento di elementi con split di ogni riga su ","
+            elements = line.split(',')
+            # Eliminazione di caratteri indesiderati (newline e spazi)
+            elements[-1] = elements[-1].strip()
+            # Se non si processa l'intestazione, aggiunta degli elementi alla lista
+            if elements[0] != 'Date':
+                list.append(elements)
+        # Chiusura del file
+        file.close()
+        # Aggiunta degli elementi della lista alla lista di lista
+        listoflist.extend(list)
+        return listoflist[start : end]
+        
+# ==============================
+#   Classe per NumericalCSVFile
+# ==============================
 class NumericalCSVFile(CSVFile):
-    
-    def get_data(self):
-        
-        # Chiamo la get_data del genitore 
-        string_data = super().get_data()
-        
-        # Preparo lista per contenere i dati ma in formato numerico
+
+    def get_data(self, start = None, end = None):
+        # Richiamo del metodo genitore
+        string_data = super().get_data(start, end)
+        # Istanziamento di una lista per salvare i valori
         numerical_data = []
-        
-        # Ciclo su tutte le "righe" corrispondenti al file originale 
+        # Lettura del file, linea per linea
         for string_row in string_data:
-            
-            # Preparo una lista di supporto per salvare la riga
-            # in "formato" nuumerico (tranne il primo elemento)
             numerical_row = []
-            
-            # Ciclo su tutti gli elementi della riga con un
-            # enumeratore: cosi' ho gratis l'indice "i" della
-            # posizione dell'elemento nella riga.
-            for i,element in enumerate(string_row):
-                
+            for i, element in enumerate(string_row):
                 if i == 0:
-                    # Il primo elemento della riga lo lascio in formato stringa
-                    numerical_row.append(element)
-                    
+                    numerical_data.append(element)
                 else:
-                    # Converto a float tutto gli altri. Ma se fallisco, stampo
-                    # l'errore e rompo il ciclo (e poi saltero' la riga).
                     try:
-                        numerical_row.append(float(element))
+                        numerical_data.append(float(element))
                     except Exception as e:
                         print('Errore in conversione del valore "{}" a numerico: "{}"'.format(element, e))
                         break
-                
-            # Alla fine aggiungo la riga in formato numerico alla lista
-            # "esterna", ma solo se sono riuscito a processare tutti gli
-            # elementi. Qui controllo per la lunghezza, ma avrei anche potuto
-            # usare una variabile di supporto o fare due break in cascata.
-            if len(numerical_row) == len(string_row):
-                numerical_data.append(numerical_row)
+                if len(numerical_row) == len(string_row):
+                    numerical_data.append(numerical_row)
+        return numerical_data[start : end]
 
-        return numerical_data
+# ==============================
+#           PROGRAMMA
+# ==============================
+#       Corpo del programma
+# ==============================
+my_file = CSVFile(name = 'shampoo_sales.csv')
+print('Nome del file: {}'.format(my_file.name))
+print('Dati contenuti nel file: "{}"'.format(my_file.get_data(0, 39)))
 
-   
-
-#==============================
-#  Corpo del programma
-#==============================
-
-mio_file = CSVFile(name='shampoo_sales.csv')
-print('Nome del file: "{}"'.format(mio_file.name))
-print('Dati contenuti nel file: "{}"'.format(mio_file.get_data()))
-
-mio_file_numerico = NumericalCSVFile(name='shampoo_sales.csv')
-print('Nome del file: "{}"'.format(mio_file_numerico.name))
-print('Dati contenuti nel file: "{}"'.format(mio_file_numerico.get_data()))
+my_numerical_file = NumericalCSVFile(name = 'shampoo_sales.csv')
+print('Nome del file numerico: "{}"'.format(my_numerical_file.name))
+print('Dati contenuti nel file numerico: "{}"'.format(my_numerical_file.get_data(0, 74)))
