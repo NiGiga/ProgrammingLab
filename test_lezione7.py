@@ -1,17 +1,31 @@
 import unittest
 from lezione7 import CSVFile
+from lezione7 import NumericalCSV
+
+    
+        
 
 
-#testing del name
 
-class TestCSVFile(unittest.TestCase):
 
-    def test_init(self):
 
-        csv_file = CSVFile('shampoo_sales.csv')
+class Testget_nomeCSVFile(unittest.TestCase):
 
-        #controllo che il nome del file sia salvato
-        #in un attributo del nome name
+    def test_nome(self):
+
+        csv_file=CSVFile('shampoo_sales.csv')
 
         self.assertEqual(csv_file.name, 'shampoo_sales.csv')
+
+
+
+class Testget_nomeNumericalCSVFile(unittest.TestCase):
+
+    def test_nome(self):
+
+        numcsv_file=NumericalCSV('shampoo_sales.csv')
+
+        self.assertEqual(numcsv_file.name, 'shampoo_sales.csv')
+
+
 
