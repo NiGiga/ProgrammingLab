@@ -2,10 +2,11 @@
 
 
 import unittest
-from prova import l
+from prova import IncrementalModel
+
 
 class test_lista_predizione(unittest.TestCase):
-    l= [50,52,60]
+    
 
     #test per n<2
 
@@ -16,13 +17,6 @@ class test_lista_predizione(unittest.TestCase):
 
         self.assertEqual(n.len(n<2), n)
 
-    #test per data != float
-
-    def test_not_a_list(self):
-
-        
-        data= list(l)
-        self.assertEqual(float(data),l)
 
         
 

@@ -1,1 +1,0 @@
-python EsLezione5.py

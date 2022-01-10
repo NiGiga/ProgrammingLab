@@ -31,8 +31,20 @@ my_file= open('shampoo_sales.csv','r')
 print(funzione_somma(my_file))
 
 
-        
 
 
 
-    
+
+
+
+
+
+
+
+
+
+   
+
+     
+
+
