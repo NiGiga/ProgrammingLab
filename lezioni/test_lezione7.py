@@ -27,5 +27,7 @@ class Testget_nomeNumericalCSVFile(unittest.TestCase):
 
         self.assertEqual(numcsv_file.name, 'shampoo_sales.csv')
 
+if not get_data()
+
 
 
