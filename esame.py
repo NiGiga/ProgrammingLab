@@ -65,7 +65,7 @@ class MovingAverage():
 
             #controllo che window_size!>numbers
             if self.window_size > len(numbers):
-                raise ExamException('Window is greater than list. window_size is "{}" and numbers is "{}", please use small value.'.format(window_size,len(numbers)))
+                raise ExamException('Window is greater than list, please use small value.')
             
             #controllo che in numbers ci siano solo numeri
             for item in numbers:
@@ -76,7 +76,7 @@ class MovingAverage():
             while i< len(numbers)-self.window_size+1:
 
                 window=numbers[i:i+self.window_size]
-                window_avarage=int((sum(window)/self.window_size)) 
+                window_avarage=(sum(window)/self.window_size) 
                 moving_avaranges.append(window_avarage)
                 i=i+1
 
@@ -84,20 +84,20 @@ class MovingAverage():
 
 
 try:
-    w_s=2
     
-    moving_average = MovingAverage(w_s)
+    moving_average = MovingAverage(2)
 
-    l=[2,4,8,16]
 
-    result = moving_average.compute(l)
+    result = moving_average.compute([2, 4, 8, 16])
 
-    print('The moving averange of "{}" is:'.format(l)) 
 
     print(result)
 
 except TypeError:
     raise ExamException('No space allow or words allow in window_size ')
+except NameError:
+    raise ExamException ('La lunghezza della finestra deve essere un numero intero')
+ 
 
 
    
