@@ -1,115 +1,111 @@
-#Creare una classe "MovingAverange":
-   #1)inizializzata con la lunghezza della finestra
-   #2)che abbia un metodo compute:
-       #2.1)imput lista valori serie
-       #2.2)output lista valori media mobile
-#effettuare controlli su:
-   #1) imput
-   #2)casi limite
-#le eccezioni si devono chiamare così:
-   #class ExamException(Exception):
+#Vogliamo calcolare la differenza degli elementi di una lista
+#Aggiungeremo anche un parametro di nome “ratio”, che permetta di riscalare le differenze (ovvero la differenza tra gli elementi va divisa per la “ratio”). Tale parametro deve avere un valore di default pari a 1.
+
+#Create quindi la classe Diff, che:
+#
+#-quando viene inizializzata accetti anche un parametro opzionale di nome ratio il cui valore di default sia 1
+#
+#- che abbia un metodo compute che prenda in input una lista di valori numerici e che ritorni in output la lista corrispondente alle loro differenze.
+#
+#Le eccezioni che devono essere alzate in caso di input non corretti o casi limite devono essere istanze di una specifica classe, ovvero “ExamException”, che dovete definire nel codice in esame.py come segue, senza modifica alcuna (copia-incollate le due righe):
+
+
+    #class ExamException(Exception):
+
         #pass
+
+
 #...e che poi userete come una normale eccezione, ad esempio:
-        #raise ExamException(‘Errore, lista valori vuota’)
-
-#esempio di utilizzo:
-    #moving_average = MovingAverage(2)
 
 
-    #result = moving_average.compute([2,4,8,16])
-
-
-    #print(result) # Deve stampare a schermo [3,6,12]
+    #raise ExamException(‘Errore, lista valori vuota’)
 
 class ExamException(Exception):
+
     pass
 
-     
-class MovingAverage():
+class Diff():
 
     def __str__(self):
+        return 'Difference'
 
-        return ('MovingAverage')
-    
-    def __init__(self,window_size):
+    def __init__(self,ratio=1):
+        
+        #controllo se ratio va bene
+        if ratio is None:
+            raise ExamException("Non c'è nulla")
+        
+        if type(ratio) is str:
+            raise ExamException('La ratio non è un numero')
 
-        #controllo che l'imput sia un intero
-        if type(window_size) is not int:
-            raise ExamException ('window_size must be int')
+        self.ratio = ratio
 
-        #controllo che la finestra abbia almeno 1 elemento
-        if not window_size>0:
-            raise ExamException ('window_size must be >0') 
+        if self.ratio <= 0:
+            raise ExamException('La ratio ha un valore sbagliato')
+        
 
-        self.window_size=window_size
+    def compute(self,t):
 
-
-    def compute(self,numbers):
-
-        self.numbers=numbers
-
-        moving_avaranges=[]
+        diff=[]
 
         i=0
 
         #controllo che sia una lista
-        if not isinstance(numbers,list):
+        if not isinstance(t,list):
             raise ExamException('This is not a list, insert a list')
 
         #controllo che la lista non sia vuota
-        elif numbers ==[]:
+        elif t ==[]:
             raise ExamException('This list is empty, insert a valid list')
-        
-        #se ho superato queste condizioni allora posso procedere
+
+        elif len(t)<2:
+            raise ExamException('The list is to short.')
+
         else:
 
-            #controllo che window_size!>numbers
-            if self.window_size > len(numbers):
-                raise ExamException('Window is greater than list, please use small value.')
-            
+            #controllo che il ratio non sia più grande degli elementi in diff
+            for item in diff:
+                if ratio > item in diff:
+                    raise ExamException('Ratio is greater than list, please use small value.')
+                    
+
             #controllo che in numbers ci siano solo numeri
-            for item in numbers:
+            for item in t:
                 if not isinstance(item,int) and not isinstance(item,float):
-                    raise ExamException('Some elements are not numbers: list"{}"'.format(numbers))
+                    raise ExamException('Some elements are not numbers: list"{}"'.format(t))
 
-            #faccio la media degli elementi e la assegno alla lista vuota poi faccio return
-            while i< len(numbers)-self.window_size+1:
+            #faccio la differenza di tutti gli elementi
 
-                window=numbers[i:i+self.window_size]
-                window_avarage=(sum(window)/self.window_size) 
-                moving_avaranges.append(window_avarage)
-                i=i+1
+            #prendo elemento per elemento i dati
+            for i, item in enumerate(t):
+                #calcolo la differenza e li aggiungo ad un array
+                if i == len(t) - 1:
+                    break
+                else:
+                    diff.append((t[i + 1] - t[i]) / self.ratio)
+        
+        
 
-            return moving_avaranges
+            return diff
 
 
-try:
+diff = Diff()
+
+
+result = diff.compute([2,4,8,16])
+
+
+print(result)
+
+
+
+
+
+        
+
+        
+        
+
     
-    moving_average = MovingAverage(2)
-
-
-    result = moving_average.compute([2, 4, 8, 16])
-
-
-    print(result)
-
-except TypeError:
-    raise ExamException('No space allow or words allow in window_size ')
-except NameError:
-    raise ExamException ('La lunghezza della finestra deve essere un numero intero')
- 
-
-
-   
-                
-                    
-                    
-                
-
-            
-            
-
-        
-        
-
-        
+     
+    
