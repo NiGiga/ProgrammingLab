@@ -1,10 +1,10 @@
-Posti,targa,marca,modello
-2, xc236gw,chevrolet,chevelle malibu
-5, xc236gw,buick,skylark 320
-5, xc236gw,plymouth,satellite
-2, xc236gw,amc,rebel sst
-5,xc236gw,ford,torino
-5,xc236gw,ford,galaxie 500
+Posti,targa,modello,marca
+2,xc236gw,cinquecento,fiat
+5,xc236gw,panda,fiat
+5,xc236gw,giulia,alfa
+2,xc236gw,enzo,ferrari
+5,xc236gw,classeA,mercedes
+5,xc236gw,fiesta,ford
 2,xc236gw,chevrolet,impala
-5,xc236gw,plymouth,fury iii
+5,xc236gw,plymouth,furyiii
 

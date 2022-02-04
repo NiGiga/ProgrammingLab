@@ -2,16 +2,25 @@ class Automotive():
 
     def __init__(self,name):
         self.name=name
+        my_file = open(self.name, 'r')
+
+        for line in my_file:
+            elemnts = line.split(',')
+
+            n_posti=elemnts[0]
+            n_targhe=elemnts[1]
+            marche_a=elemnts[3]
+            modelli_a=elemnts[2]
+        my_file.close()
 
     def __str__(self):
         my_file = open(self.name, 'r')
+
         #creo una lista vuoto
         Automotive = []
         #splitto sulla virgola
-        for line in my_file:
-            elemnts = line.split(',')
-            if elemnts[0] != 'Posti':
-                Automotive.append(elemnts)
+        if elemnts[0] != 'Posti':
+            Automotive.append(elemnts)
         #chiudo il file
         my_file.close()
         #ritorno i valori
@@ -43,8 +52,8 @@ class Automotive():
         marche = []
 
         
-            if elemnts[0] != 'Posti':
-                    marche.append(elemnts[2])
+        if elemnts[0] != 'Posti':
+            marche.append(marche_a)
         #chiudo il file
         my_file.close()
         #ritorno i valori
@@ -54,11 +63,9 @@ class Automotive():
         my_file = open(self.name, 'r')
         #creo una lista vuoto
         modelli = []
-        #splitto sulla virgola
-        for line in my_file:
-            elemnts = line.split(',')
-            if elemnts[0] != 'Posti':
-                modelli.append(elemnts[-1])
+        
+        if elemnts[0] != 'Posti':
+            modelli.append(modelli_a)
         #chiudo il file
         my_file.close()
         #ritorno i valori
@@ -68,11 +75,9 @@ class Automotive():
         my_file = open(self.name, 'r')
         #creo una lista vuoto
         posti = []
-        #splitto sulla virgola
-        for line in my_file:
-            elemnts = line.split(',')
-            if elemnts[0] != 'Posti':
-                posti.append(elemnts[0])
+        
+        if elemnts[0] != 'Posti':
+            posti.append(n_posti)
         #chiudo il file
         my_file.close()
         #ritorno i valori
@@ -82,11 +87,9 @@ class Automotive():
         my_file = open(self.name, 'r')
         #creo una lista vuoto
         targhe = []
-        #splitto sulla virgola
-        for line in my_file:
-            elemnts = line.split(',')
-            if elemnts[0] != 'Posti':
-                targhe.append(elemnts[1])
+        
+        if elemnts[0] != 'Posti':
+            targhe.append(n_targhe)
         #chiudo il file
         my_file.close()
         #ritorno i valori
